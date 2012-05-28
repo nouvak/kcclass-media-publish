@@ -79,7 +79,7 @@ class YoutubeTest(unittest.TestCase):
     
     def test_upload_and_delete(self):
         # prepare a media group object to hold our video's meta-data
-        my_media_group = gdata.media.Group(
+        media_group = gdata.media.Group(
             title=gdata.media.Title(text="Marko KCClass test."),
             description=gdata.media.Description(description_type='plain',
                 text="Marko's test movie for the KC Class project."),
@@ -90,7 +90,7 @@ class YoutubeTest(unittest.TestCase):
                 label='Education')],
                 player=None)
         # create the gdata.youtube.YouTubeVideoEntry to be uploaded
-        video_entry = gdata.youtube.YouTubeVideoEntry(media=my_media_group)
+        video_entry = gdata.youtube.YouTubeVideoEntry(media=media_group)
         # set the path for the video file binary
         video_file_location = '../sample-data/test-video1.flv'
         new_entry = self.yt_service.InsertVideoEntry(video_entry, video_file_location)
