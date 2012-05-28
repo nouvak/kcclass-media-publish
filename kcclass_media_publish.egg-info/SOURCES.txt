@@ -15,6 +15,9 @@ kcclass_media_publish.egg-info/top_level.txt
 kcclassmediapublish/__init__.py
 kcclassmediapublish/tests.py
 kcclassmediapublish/views.py
+kcclassmediapublish/services/__init__.py
+kcclassmediapublish/services/slideshare.py
+kcclassmediapublish/services/youtube.py
 kcclassmediapublish/static/favicon.ico
 kcclassmediapublish/static/footerbg.png
 kcclassmediapublish/static/headerbg.png
