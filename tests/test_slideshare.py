@@ -1,3 +1,6 @@
+# this code uses the "pyslideshare" library.
+# you have to add the "kcclass-media-publish/libs" directory to PYTHONPATH first.
+
 import unittest
 from pyslideshare import pyslideshare
 
