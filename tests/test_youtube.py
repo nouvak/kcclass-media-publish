@@ -1,3 +1,7 @@
+# this code uses the "gdata" library.
+# you have to install that first:
+#   pip install gdata
+
 import unittest
 
 import gdata.media

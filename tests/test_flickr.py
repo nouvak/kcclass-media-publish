@@ -1,4 +1,4 @@
-# this code uses the python-vimeo library.
+# this code uses the "flickrapi" library.
 # you have to install that first:
 #   pip install flickrapi
 
