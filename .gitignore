@@ -3,3 +3,4 @@
 .project
 *.pyc
 .coverage
+kcclass_media_publish.egg-info/
