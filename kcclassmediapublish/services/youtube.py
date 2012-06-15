@@ -55,7 +55,7 @@ class YoutubeService:
         return video_id
     
     def unpublish(self, video_id):
-        log.debug("Unpublishing youtube video: %s" % str(video_id))
+        log.debug("Unpublishing Youtube video: %s" % str(video_id))
         response = self.yt_service.DeleteVideoEntry(video_id)
         if response is not None:
             log.debug("Unpublishing succeeded.")
