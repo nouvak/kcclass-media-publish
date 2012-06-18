@@ -16,7 +16,7 @@ class PicassawebServiceTest(unittest.TestCase):
         publish_metadata = PublishMetadata(title="Marko KCClass test.",
                                            description="Marko's test image for the KC Class project.",
                                            tags=["Marko", "kcclass"],
-                                           category="Education",
+                                           category="KCClass",
                                            access=Access.PUBLIC)
         image_id = self.picassaweb.publish("nouvak.kcclass@gmail.com", "KCClassTest", 
                              "../../sample-data/test-image1.jpg", publish_metadata)
