@@ -6,7 +6,7 @@ from kcclassmediapublish.metadata.publish_metadata import PublishMetadata, Acces
 class YoutubeServiceTest(unittest.TestCase):
 
     def setUp(self):
-        self.youtube = YoutubeService()
+        self.youtube = YoutubeService("nouvak.kcclass@gmail.com", "KCClassTest")
 
     def tearDown(self):
         pass
@@ -18,8 +18,7 @@ class YoutubeServiceTest(unittest.TestCase):
                                            tags=["Marko", "kcclass"],
                                            category="Education",
                                            access=Access.PUBLIC)
-        video_id = self.youtube.publish("nouvak.kcclass@gmail.com", "KCClassTest", 
-                             "../../sample-data/test-video1.flv", publish_metadata)
+        video_id = self.youtube.publish("../../sample-data/test-video1.flv", publish_metadata)
         self.assertTrue(video_id is not None, "Video publishing failed!")
         # unpublish the video that was just published.
         self.youtube.unpublish(video_id)

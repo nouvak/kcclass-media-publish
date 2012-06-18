@@ -1,12 +1,12 @@
 import unittest
 
-from kcclassmediapublish.services.picasaweb import PicassawebService
+from kcclassmediapublish.services.slideshare import SlideshareService
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata, Access
 
-class PicassawebServiceTest(unittest.TestCase):
+class SlideshareServiceTest(unittest.TestCase):
 
     def setUp(self):
-        self.picassaweb = PicassawebService("nouvak.kcclass@gmail.com", "KCClassTest")
+        self.slideshare = SlideshareService("KCClass", "KCClassTest")
 
     def tearDown(self):
         pass
@@ -18,10 +18,11 @@ class PicassawebServiceTest(unittest.TestCase):
                                            tags=["Marko", "kcclass"],
                                            category="KCClass",
                                            access=Access.PUBLIC)
-        image_id = self.picassaweb.publish("../../sample-data/test-image1.jpg", publish_metadata)
-        self.assertTrue(image_id is not None, "Image publishing failed!")
+        slide_id = self.slideshare.publish("../../sample-data/test-slide2.ppt", 
+                                           publish_metadata)
+        self.assertTrue(slide_id is not None, "Image publishing failed!")
         # unpublish the video that was just published.
-        self.picassaweb.unpublish(image_id)
+        self.slideshare.unpublish(slide_id)
 
 
 if __name__ == '__main__':

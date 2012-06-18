@@ -14,14 +14,14 @@ class YoutubeTest(unittest.TestCase):
     def setUp(self):
         self.username = 'nouvak.kcclass@gmail.com'
         self.password = 'KCClassTest'
-        self.yt_service = gdata.youtube.service.YouTubeService()
+        self.youtube_service = gdata.youtube.service.YouTubeService()
         # Turn on HTTPS/SSL access.
         # Note: SSL is not available at this time for uploads.
-        self.yt_service.ssl = False
+        self.youtube_service.ssl = False
         # Authenticate using your Google email address and password.
-        self.yt_service.ClientLogin(self.username, self.password)
-        self.yt_service.developer_key = 'AI39si6-qCVmA8KI53Eg3NF5VjnsvKYzsmzD4njj0VFnQDWgh-Iv0X3h_ABBCAwMWDe_G3VzEHGcTrd6eAy9QBPKBb3CDDDXJw'
-        self.yt_service.client_id = 'kcclass-media-publish'
+        self.youtube_service.ClientLogin(self.username, self.password)
+        self.youtube_service.developer_key = 'AI39si6-qCVmA8KI53Eg3NF5VjnsvKYzsmzD4njj0VFnQDWgh-Iv0X3h_ABBCAwMWDe_G3VzEHGcTrd6eAy9QBPKBb3CDDDXJw'
+        self.youtube_service.client_id = 'kcclass-media-publish'
 
     def tearDown(self):
         pass
@@ -61,25 +61,25 @@ class YoutubeTest(unittest.TestCase):
         print "*********************************"
         print "TEST: test_get_standard_feeds"
         print "*********************************"
-        self.print_video_feed(self.yt_service.GetTopRatedVideoFeed())
-        self.print_video_feed(self.yt_service.GetMostViewedVideoFeed())
-        self.print_video_feed(self.yt_service.GetRecentlyFeaturedVideoFeed())
-        self.print_video_feed(self.yt_service.GetWatchOnMobileVideoFeed())
-        self.print_video_feed(self.yt_service.GetTopFavoritesVideoFeed())
-        self.print_video_feed(self.yt_service.GetMostRecentVideoFeed())
-        self.print_video_feed(self.yt_service.GetMostDiscussedVideoFeed())
-        self.print_video_feed(self.yt_service.GetMostLinkedVideoFeed())
-        self.print_video_feed(self.yt_service.GetMostRespondedVideoFeed())
+        self.print_video_feed(self.youtube_service.GetTopRatedVideoFeed())
+        self.print_video_feed(self.youtube_service.GetMostViewedVideoFeed())
+        self.print_video_feed(self.youtube_service.GetRecentlyFeaturedVideoFeed())
+        self.print_video_feed(self.youtube_service.GetWatchOnMobileVideoFeed())
+        self.print_video_feed(self.youtube_service.GetTopFavoritesVideoFeed())
+        self.print_video_feed(self.youtube_service.GetMostRecentVideoFeed())
+        self.print_video_feed(self.youtube_service.GetMostDiscussedVideoFeed())
+        self.print_video_feed(self.youtube_service.GetMostLinkedVideoFeed())
+        self.print_video_feed(self.youtube_service.GetMostRespondedVideoFeed())
         # You can also retrieve a YouTubeVideoFeed by passing in the URI
         uri = 'http://gdata.youtube.com/feeds/api/standardfeeds/JP/most_viewed'
-        self.print_video_feed(self.yt_service.GetYouTubeVideoFeed(uri))
+        self.print_video_feed(self.youtube_service.GetYouTubeVideoFeed(uri))
 
     def test_get_user_uploads(self):
         print "*********************************"
         print "TEST: test_get_standard_feeds"
         print "*********************************"
         uri = 'http://gdata.youtube.com/feeds/api/users/default/uploads'
-        self.print_video_feed(self.yt_service.GetYouTubeVideoFeed(uri))
+        self.print_video_feed(self.youtube_service.GetYouTubeVideoFeed(uri))
     
     def test_upload_and_delete(self):
         # prepare a media group object to hold our video's meta-data
@@ -97,15 +97,15 @@ class YoutubeTest(unittest.TestCase):
         video_entry = gdata.youtube.YouTubeVideoEntry(media=media_group)
         # set the path for the video file binary
         video_file_location = '../sample-data/test-video1.flv'
-        new_entry = self.yt_service.InsertVideoEntry(video_entry, video_file_location)
+        new_entry = self.youtube_service.InsertVideoEntry(video_entry, video_file_location)
         # check if he uploading was successful.
-        upload_status = self.yt_service.CheckUploadStatus(new_entry)
+        upload_status = self.youtube_service.CheckUploadStatus(new_entry)
         if upload_status is not None:
             video_upload_state = upload_status[0]
             detailed_message = upload_status[1]
             print "%s: %s" % (video_upload_state, detailed_message)
         # delete the video.
-        response = self.yt_service.DeleteVideoEntry(new_entry)
+        response = self.youtube_service.DeleteVideoEntry(new_entry)
         if response:
             print 'Video successfully deleted!'
         else:
