@@ -1,12 +1,12 @@
 import unittest
 
-from kcclassmediapublish.services.picasaweb import PicassawebService
+from kcclassmediapublish.services.flickr import FlickrService
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata, Access
 
-class PicassawebServiceTest(unittest.TestCase):
+class FlickrServiceTest(unittest.TestCase):
 
     def setUp(self):
-        self.flickr = PicassawebService("nouvak.kcclass@gmail.com", "KCClassTest")
+        self.flickr = FlickrService("nouvak.kcclass@gmail.com", "KCClassTest")
 
     def tearDown(self):
         pass

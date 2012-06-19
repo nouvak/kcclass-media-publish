@@ -1,7 +1,6 @@
 import logging
 from pyslideshare import pyslideshare
 
-
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
     Access
 
