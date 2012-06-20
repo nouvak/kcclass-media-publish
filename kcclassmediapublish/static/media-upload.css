@@ -1,0 +1,11 @@
+.form-row {
+}
+
+.form-label {
+	float: left;
+	width: 100px;
+}
+
+.form-input {
+	float: left;
+}
