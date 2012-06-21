@@ -29,7 +29,21 @@ def upload_file(request):
     input_file = request.POST['filepath'].file
     out_filepath = get_file_from_user(filename, input_file)
     log.debug("Output filepath: %s" % out_filepath)
+    # get media metadata.
+    
     # upload the media file to the selected media sites.
-    # TODO
+    media_site = request.POST['media-site']
+    log.debug("Media site: %s" % media_site)
+    if media_site == "youtube":
+        pass
+    elif media_site == "picasaweb":
+        pass
+    elif media_site == "slideshare":
+        pass
+    elif media_site == "flickr":
+        pass
+    else:
+        log.error("Unidentified media site: " + media_site)        
+    
     log.debug("Uploading succeeded.")
     return Response('OK')

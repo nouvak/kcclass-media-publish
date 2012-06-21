@@ -18,3 +18,7 @@ class PublishMetadata:
         self.tags = tags
         self.category = category
         self.access = access
+        
+    def __str__(self):
+        return "PublishMetadata: title=%s, description=%s, tags=%s, category=%s, access=%s" % \
+            ()

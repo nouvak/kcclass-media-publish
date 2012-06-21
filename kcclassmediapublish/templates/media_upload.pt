@@ -1,103 +1,120 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal">
 	<head>
-		<title>The Pyramid Web Application Development Framework</title>
+		<title>KC Class Media upload</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 		<meta name="keywords" content="python web application" />
 		<meta name="description" content="pyramid web application" />
 		<link rel="shortcut icon" href="${request.static_url('kcclassmediapublish:static/favicon.ico')}" />
-		<link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/pylons.css')}" type="text/css" media="screen" charset="utf-8" />
+		<!-- <link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/pylons.css')}" type="text/css" media="screen" charset="utf-8" /> -->
 		<link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/media-upload.css')}" type="text/css" media="screen" charset="utf-8" />
-		<link rel="stylesheet" href="http://static.pylonsproject.org/fonts/nobile/stylesheet.css" media="screen" />
-		<link rel="stylesheet" href="http://static.pylonsproject.org/fonts/neuton/stylesheet.css" media="screen" />
+		<!-- <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/nobile/stylesheet.css" media="screen" />
+		<link rel="stylesheet" href="http://static.pylonsproject.org/fonts/neuton/stylesheet.css" media="screen" /> -->
 		<!--[if lte IE 6]>
 		<link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/ie6.css')}" type="text/css" media="screen" charset="utf-8" />
 		<![endif]-->
 	</head>
 	<body>
+		<h1>KC Class Media upload</h1>
 		<form action="/upload-media-confirm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-			<div class="form-row">
-				<div class="form-label">
-					<label for="username">Username</label>
+			<fieldset>
+				<legend>File</legend>
+				<div class="form-row">
+					<div class="form-input">
+						<input id="filepath" name="filepath" type="file" value="" />
+					</div>
+					<div style="clear: both;"></div>
 				</div>
-				<div class="form-input">
-					<input id="username" name="username" type="text" value="" />
-				</div>
-				<div style="clear: both;"></div>
-			</div>
+			</fieldset>
 
-			<div class="form-row">
-				<div class="form-label">
-					<label for="password">Password</label>
-				</div>
-				<div class="form-input">
-					<input id="password" name="password" type="password" value="" />
-				</div>
-				<div style="clear: both;"></div>
-			</div>
+			<fieldset>
+				<legend>Media site</legend>
+				<select name="media-site">
+				  <option value="youtube">Youtube</option>
+				  <option value="picasaweb">PicasaWeb</option>
+				  <option value="slideshare">Slideshare</option>
+				  <option value="flickr">Flickr</option>
+				</select>
+			</fieldset>
 
-			<div class="form-row">
-				<div class="form-label">
-					<label for="title">Title</label>
+			<fieldset>
+				<legend>Authentication data</legend>
+				<div class="form-row">
+					<div class="form-label">
+						<label for="username">Username</label>
+					</div>
+					<div class="form-input">
+						<input id="username" name="username" type="text" value="" />
+					</div>
+					<div style="clear: both;"></div>
 				</div>
-				<div class="form-input">
-					<input id="title" name="title" type="text" value="" />
+	
+				<div class="form-row">
+					<div class="form-label">
+						<label for="password">Password</label>
+					</div>
+					<div class="form-input">
+						<input id="password" name="password" type="password" value="" />
+					</div>
+					<div style="clear: both;"></div>
 				</div>
-				<div style="clear: both;"></div>
-			</div>			
-
-			<div class="form-row">
-				<div class="form-label">
-					<label for="description">Description</label>
+			</fieldset>
+			
+			<fieldset>
+				<legend>Media metadata</legend>
+				<div class="form-row">
+					<div class="form-label">
+						<label for="title">Title</label>
+					</div>
+					<div class="form-input">
+						<input id="title" name="title" type="text" value="" />
+					</div>
+					<div style="clear: both;"></div>
+				</div>			
+	
+				<div class="form-row">
+					<div class="form-label">
+						<label for="description">Description</label>
+					</div>
+					<div class="form-input">
+						<textarea id="description" name="description" rows="5" cols="20"></textarea>
+					</div>
+					<div style="clear: both;"></div>
+				</div>			
+	
+				<div class="form-row">
+					<div class="form-label">
+						<label for="tags">Tags</label>
+					</div>
+					<div class="form-input">
+						<input id="tags" name="tags" type="text" value="" />
+					</div>
+					<div style="clear: both;"></div>
+				</div>	
+	
+				<div class="form-row">
+					<div class="form-label">
+						<label for="category">Category</label>
+					</div>
+					<div class="form-input">
+						<input id="category" name="category" type="text" value="" />
+					</div>
+					<div style="clear: both;"></div>
 				</div>
-				<div class="form-input">
-					<textarea id="description" name="description" rows="5" cols="20"></textarea>
+	
+				<div class="form-row">
+					<div class="form-label">
+						<label for="access">Access</label>
+					</div>
+					<div class="form-input">
+						<label for="public">Public</label>
+						<input type="radio" name="access" id="public" checked="checked" />
+						<label for="female">Private</label>
+						<input type="radio" name="access" id="private" />
+					</div>
+					<div style="clear: both;"></div>
 				</div>
-				<div style="clear: both;"></div>
-			</div>			
-
-			<div class="form-row">
-				<div class="form-label">
-					<label for="tags">Tags</label>
-				</div>
-				<div class="form-input">
-					<input id="tags" name="tags" type="text" value="" />
-				</div>
-				<div style="clear: both;"></div>
-			</div>	
-
-			<div class="form-row">
-				<div class="form-label">
-					<label for="category">Category</label>
-				</div>
-				<div class="form-input">
-					<input id="category" name="category" type="text" value="" />
-				</div>
-				<div style="clear: both;"></div>
-			</div>
-
-			<div class="form-row">
-				<div class="form-label">
-					<label for="access">Access</label>
-				</div>
-				<div class="form-input">
-					<label for="public">Public</label>
-					<input type="radio" name="access" id="public" checked="checked" />
-					<label for="female">Private</label>
-					<input type="radio" name="access" id="private" />
-				</div>
-				<div style="clear: both;"></div>
-			</div>
-
-			<div class="form-row">
-				<div class="form-label">
-					<label for="filepath">File</label>
-				</div>
-				<div class="form-input">
-					<input id="filepath" name="filepath" type="file" value="" />
-				</div>
-				<div style="clear: both;"></div>
-			</div>
+			</fieldset>
 						
 			<input type="submit" value="Upload" />
 		</form>
