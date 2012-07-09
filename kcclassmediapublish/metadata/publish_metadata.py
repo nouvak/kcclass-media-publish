@@ -21,4 +21,4 @@ class PublishMetadata:
         
     def __str__(self):
         return "PublishMetadata: title=%s, description=%s, tags=%s, category=%s, access=%s" % \
-            ()
+            (self.title, self.description, str(self.tags), self.category, str(self.access))
