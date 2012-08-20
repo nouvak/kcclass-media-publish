@@ -4,6 +4,7 @@ import gdata.youtube.service
 
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
     Access
+from kcclassmediapublish.metadata.list_metadata import ListMetadata
 
 log = logging.getLogger( __name__ )
 
@@ -60,3 +61,23 @@ class YoutubeService:
             log.debug("Unpublishing succeeded.")
         else:
             raise Exception("Unpublishing failed.")
+        
+    def list(self):
+        log.debug("Listing the uploaded youtube videos.")
+        uri = 'http://gdata.youtube.com/feeds/api/users/default/uploads'
+        feed = self.youtube_service.GetYouTubeVideoFeed(uri)
+        videos = []
+        for entry in feed.entry:
+            video_id = entry.id
+            title = entry.media.title.text
+            description = entry.media.description.text
+            if len(entry.media.category) > 0:
+                category = entry.media.category[0].text
+            else:
+                category = None
+            tags = entry.media.keywords.text.split(",")
+            video_metadata = ListMetadata(id=video_id, title=title, 
+                                          description=description,
+                                          tags=tags, category=category)
+            videos.append(video_metadata)
+        return videos

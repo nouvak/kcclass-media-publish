@@ -104,12 +104,18 @@ class YoutubeTest(unittest.TestCase):
             video_upload_state = upload_status[0]
             detailed_message = upload_status[1]
             print "%s: %s" % (video_upload_state, detailed_message)
+        # list the uploaded videos.
+        uri = 'http://gdata.youtube.com/feeds/api/users/default/uploads'
+        feed = self.youtube_service.GetYouTubeVideoFeed(uri)
+        for entry in feed.entry:
+            self.print_entry_details(entry)
         # delete the video.
         response = self.youtube_service.DeleteVideoEntry(new_entry)
         if response:
             print 'Video successfully deleted!'
         else:
             print 'Video deletion failed!'
+        
 
 if __name__ == '__main__':
     unittest.main()
