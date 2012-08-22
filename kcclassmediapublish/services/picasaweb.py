@@ -82,6 +82,9 @@ class PicassawebService:
         log.debug("Unpublishing succeeded.")
         
     def list(self):
+        """
+        Return a list of published images in PicasaWeb cloud for the given user.
+        """
         log.debug("Listing the uploaded Picasa Web photos.")
         feed = self.picasaweb_service.GetUserFeed(kind='photo')
         photos = []

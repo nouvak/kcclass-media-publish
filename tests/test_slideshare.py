@@ -29,6 +29,11 @@ class SlideshareTest(unittest.TestCase):
                                     slideshow_title='pyslideshare works!')
         assert json is not None
         slide_id = json.SlideShowUploaded.SlideShowID
+        # list the uploaded videos.
+        slideshows = obj.get_slideshow_by_user( username_for=self.username )
+        for slideshow in slideshows['User']['Slideshow']:
+            print "Recenlty added slideshow id: ", slideshow['ID']['value']
+            print "Recenlty added slideshow title: ", slideshow['Title']['value']
         # delete the slide.
         obj.delete_slideshow(username=self.username, password=self.password, slideshow_id=slide_id)
 

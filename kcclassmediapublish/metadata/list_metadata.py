@@ -1,12 +1,10 @@
-from atom import Id
-
 class ListMetadata:
     """
     This class holds the metadata about the published media.
     """
     def __init__(self, id, title=None, description=None, tags=None, 
                  category=None):
-        assert id is None or isinstance(id, Id), "id is not string: " + str(id)
+        assert id is None or isinstance(id, basestring), "id is not string: " + str(id)
         assert title is None or isinstance(title, basestring), "title is not string: " + str(title)
         assert description is None or isinstance(description, basestring), "description is not string: " + str(description)
         assert tags is None or isinstance(tags, list), "tags is not list: " + str(tags)

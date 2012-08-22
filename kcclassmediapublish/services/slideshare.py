@@ -3,6 +3,7 @@ from pyslideshare import pyslideshare
 
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
     Access
+from kcclassmediapublish.metadata.list_metadata import ListMetadata
 
 log = logging.getLogger( __name__ )
 
@@ -32,7 +33,8 @@ class SlideshareService:
         response = self.slideshare_service.upload_slideshow(username=self.username, 
                                                             password=self.password, 
                                                             slideshow_srcfile=filepath,
-                                                            slideshow_title=pub_metadata.title)
+                                                            slideshow_title=pub_metadata.title,
+                                                            slideshow_tags=pub_metadata.tags)
         if response is None:
             raise Exception("Publishing failed.")
         slide_id = response.SlideShowUploaded.SlideShowID
@@ -50,3 +52,28 @@ class SlideshareService:
                                                  password=self.password, 
                                                  slideshow_id=slide_id)
         log.debug("Unpublishing succeeded.")
+
+    def list(self):
+        """
+        Return a list of published slideshows in SlideShare cloud for the given user.
+        """
+        log.debug("Listing the uploaded SlideShare photos.")
+        feed = self.slideshare_service.get_slideshow_by_user( username_for=self.username )
+        slideshows = []
+        for entry in feed['User']['Slideshow']:
+            video_id = str(entry['ID']['value'])
+            title = entry['Title']['value']
+            if 'value' in entry['Description']:
+                description = entry['Description']['value']
+            else:
+                description = None
+            category = None
+            if 'value' in entry['Tags']:
+                tags = entry['Tags']['value']
+            else:
+                tags = []
+            slideshow_metadata = ListMetadata(id=video_id, title=title, 
+                                              description=description,
+                                              tags=tags, category=category)
+            slideshows.append(slideshow_metadata)
+        return slideshows

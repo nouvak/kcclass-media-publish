@@ -45,10 +45,6 @@ class YoutubeTest(unittest.TestCase):
             "Marko's test movie for the KC Class project.", image_file_location, 
             content_type='image/jpeg')
         # list the uploaded videos.
-        #photos = self.lh2_service.GetFeed('/data/feed/api/user/%s/albumid/%s?kind=photo' % (
-        #    'default', albums.entry[0].gphoto_id.text))
-        #for photos_item in photos.entry:
-        #    print 'Photo title:', photos_item.title.text
         photos = self.lh2_service.GetUserFeed(kind='photo')
         for photos_item in photos.entry:
             print 'Recently added photo title:', photos_item.title.text

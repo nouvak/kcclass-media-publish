@@ -5,6 +5,7 @@ import gdata.youtube.service
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
     Access
 from kcclassmediapublish.metadata.list_metadata import ListMetadata
+from atom import Id
 
 log = logging.getLogger( __name__ )
 
@@ -22,6 +23,9 @@ class YoutubeService:
         self.youtube_service.ClientLogin(username, password)
     
     def publish(self, filepath, pub_metadata):
+        """
+        Publish the video to the YouTube cloud.
+        """
         assert isinstance(filepath, basestring), "filepath is not string: " + str(filepath)
         assert isinstance(pub_metadata, PublishMetadata), "pub_metadata is not PublishMetadata" + str(pub_metadata)
         log.debug("Publishing youtube video: %s, %s" % (filepath, str(pub_metadata)))
@@ -55,6 +59,9 @@ class YoutubeService:
         return video_id
     
     def unpublish(self, video_id):
+        """
+        Unpublish the video from the YouTube cloud.
+        """
         log.debug("Unpublishing Youtube video: %s" % str(video_id))
         response = self.youtube_service.DeleteVideoEntry(video_id)
         if response is not None:
@@ -63,12 +70,15 @@ class YoutubeService:
             raise Exception("Unpublishing failed.")
         
     def list(self):
+        """
+        Return a list of published videos in YouTube cloud for the given user.
+        """
         log.debug("Listing the uploaded youtube videos.")
         uri = 'http://gdata.youtube.com/feeds/api/users/default/uploads'
         feed = self.youtube_service.GetYouTubeVideoFeed(uri)
         videos = []
         for entry in feed.entry:
-            video_id = entry.id
+            video_id = entry.id.text
             title = entry.media.title.text
             description = entry.media.description.text
             if len(entry.media.category) > 0:

@@ -12,7 +12,7 @@ class SlideshareServiceTest(unittest.TestCase):
         pass
 
     def test_publish_and_unpublish(self):
-        # publish a sample video.
+        # publish a sample slideshow.
         publish_metadata = PublishMetadata(title="Marko KCClass test.",
                                            description="Marko's test image for the KC Class project.",
                                            tags=["Marko", "kcclass"],
@@ -21,7 +21,10 @@ class SlideshareServiceTest(unittest.TestCase):
         slide_id = self.slideshare.publish("../../sample-data/test-slide2.ppt", 
                                            publish_metadata)
         self.assertTrue(slide_id is not None, "Image publishing failed!")
-        # unpublish the video that was just published.
+        # list the uploaded slideshows.
+        videos = self.slideshare.list()
+        self.assertTrue(len(videos) > 0, "Number of published videos should be greater than 0.")
+        # unpublish the slideshows that was just published.
         self.slideshare.unpublish(slide_id)
 
 
