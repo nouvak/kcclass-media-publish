@@ -20,6 +20,9 @@ class FlickrServiceTest(unittest.TestCase):
                                            access=Access.PUBLIC)
         image_id = self.flickr.publish("../../sample-data/test-image1.jpg", publish_metadata)
         self.assertTrue(image_id is not None, "Image publishing failed!")
+        # list the uploaded videos.
+        photos = self.flickr.list("KCClass")
+        self.assertTrue(len(photos) > 0, "Number of published photos should be greater than 0.")
         # unpublish the video that was just published.
         self.flickr.unpublish(image_id)
 

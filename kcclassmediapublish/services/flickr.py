@@ -3,6 +3,7 @@ import flickrapi
 
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
     Access
+from kcclassmediapublish.metadata.list_metadata import ListMetadata
 
 log = logging.getLogger( __name__ )
 
@@ -19,10 +20,11 @@ class FlickrService:
             raw_input("Press ENTER after you authorized this program")
         self.flickr_service.get_token_part_two((token, frob))
         
-    def __get_category_id(self, photosets, category_name):
+    def __get_category_id(self, category_name):
         """
         Get a reference to a category whose name is equal to category_name.
         """
+        photosets = self.flickr_service.photosets_getList()
         for photosets_entry in photosets.find('photosets'):
             if photosets_entry.find('title').text == category_name:
                 return photosets_entry.attrib['id']
@@ -42,6 +44,10 @@ class FlickrService:
             privacy_flags['is_family'] = u'0'
             privacy_flags['is_friend'] = u'0'
         return privacy_flags
+    
+    @staticmethod
+    def __add_quotes(str):
+        return '"' + str + '"'
         
     def publish(self, filepath, pub_metadata):
         """
@@ -50,15 +56,17 @@ class FlickrService:
         assert isinstance(filepath, basestring), "filepath is not string: " + str(filepath)
         assert isinstance(pub_metadata, PublishMetadata), "pub_metadata is not PublishMetadata" + str(pub_metadata)
         log.debug("Publishing Flickr image: %s, %s" % (filepath, str(pub_metadata)))
-        photosets = self.flickr_service.photosets_getList()
-        category_id = self.__get_category_id(photosets, pub_metadata.category)
+        category_id = self.__get_category_id(pub_metadata.category)
         if category_id is None:
             raise Exception("Category doesn't exist: %s" % pub_metadata.category)
         # upload image
+        quotes_enclosed_tags = [FlickrService.__add_quotes(tag) for tag in pub_metadata.tags]
+        str_tags = " ".join(quotes_enclosed_tags)
         privacy_flags = self.__get_privacy_flags(pub_metadata.access)
         result = self.flickr_service.upload(filename=filepath, 
                                             title=pub_metadata.title, 
-                                            description=pub_metadata.description, 
+                                            description=pub_metadata.description,
+                                            tags=str_tags,
                                             is_public=privacy_flags['is_public'], 
                                             is_family=privacy_flags['is_family'], 
                                             is_friend=privacy_flags['is_friend'])
@@ -77,3 +85,22 @@ class FlickrService:
         if result.attrib['stat'] != 'ok':
             raise Exception("Unpublishing failed.")
         log.debug("Unpublishing succeeded.")
+
+    def list(self, category):
+        """
+        Return a list of published slideshows in Flickr cloud for the given user.
+        """
+        log.debug("Listing the uploaded Flickr photos.")
+        category_id = self.__get_category_id(category)
+        photos = []
+        for entry in self.flickr_service.walk_set(category_id):
+            video_id = entry.get('id')
+            title = entry.get('title')
+            description = entry.get('description')
+            category = category_id
+            tags = entry.get('tags')
+            photo_metadata = ListMetadata(id=video_id, title=title, 
+                                          description=description,
+                                          tags=tags, category=category)
+            photos.append(photo_metadata)
+        return photos

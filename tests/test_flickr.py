@@ -41,6 +41,9 @@ class FlickrTest(unittest.TestCase):
             photo_id = result.find('photoid').text
             photos.append(photo_id)
             self.flickr.photosets_addPhoto(photoset_id=photoset_id, photo_id=photo_id)
+        # list images.
+        for photo in self.flickr.walk_set(photoset_id):
+            print photo.get('title')
         # delete the images.
         for photo_id in photos:
             result = self.flickr.photos_delete(photo_id=photo_id)
