@@ -86,21 +86,31 @@ class FlickrService:
             raise Exception("Unpublishing failed.")
         log.debug("Unpublishing succeeded.")
 
-    def list(self, category):
+    def list(self, category=None):
         """
         Return a list of published slideshows in Flickr cloud for the given user.
         """
         log.debug("Listing the uploaded Flickr photos.")
-        category_id = self.__get_category_id(category)
         photos = []
-        for entry in self.flickr_service.walk_set(category_id):
-            video_id = entry.get('id')
+        if category is None:
+            user_id = self.flickr_service.people_findByEmail(find_email=self.username).find('user').get('nsid')
+            entries = self.flickr_service.people_getPhotos(user_id=user_id).find('photos').findall('photo')
+        else:
+            category_id = self.__get_category_id(category)
+            entries = self.flickr_service.walk_set(category_id)
+
+        for entry in entries:
+            photo_id = entry.get('id')
+            photo_info = self.flickr_service.photos_getInfo(photo_id=photo_id)
             title = entry.get('title')
-            description = entry.get('description')
-            category = category_id
-            tags = entry.get('tags')
-            photo_metadata = ListMetadata(id=video_id, title=title, 
+            description = photo_info.find('photo').find('description').text
+            category = None
+            tags = []
+            for tag in photo_info.find('photo').find('tags').findall('tag'):
+                tags.append(tag.text)
+            photo_metadata = ListMetadata(id=photo_id, title=title, 
                                           description=description,
                                           tags=tags, category=category)
             photos.append(photo_metadata)
+
         return photos
