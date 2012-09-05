@@ -56,14 +56,16 @@ class YoutubeService:
             detailed_message = upload_status[1]
             log.debug("%s: %s" % (video_upload_state, detailed_message))
         log.debug("Publishing succeeded.")
-        return video_id
+        return self.__get_id_from_url(video_id.id.text);
     
     def unpublish(self, video_id):
         """
         Unpublish the video from the YouTube cloud.
         """
         log.debug("Unpublishing Youtube video: %s" % str(video_id))
-        response = self.youtube_service.DeleteVideoEntry(video_id)
+        url = "https://gdata.youtube.com/feeds/api/users/default/uploads/%s" % video_id
+        video_entry = self.youtube_service.GetYouTubeVideoEntry(uri=url) 
+        response = self.youtube_service.DeleteVideoEntry(video_entry)
         if response is not None:
             log.debug("Unpublishing succeeded.")
         else:
@@ -78,7 +80,7 @@ class YoutubeService:
         feed = self.youtube_service.GetYouTubeVideoFeed(uri)
         videos = []
         for entry in feed.entry:
-            video_id = entry.id.text
+            video_id = self.__get_id_from_url(entry.id.text)
             title = entry.media.title.text
             description = entry.media.description.text
             if len(entry.media.category) > 0:
@@ -91,3 +93,6 @@ class YoutubeService:
                                           tags=tags, category=category)
             videos.append(video_metadata)
         return videos
+    
+    def __get_id_from_url(self, url):
+        return url[url.rfind("/")+1:]
