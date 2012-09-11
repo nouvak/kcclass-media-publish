@@ -70,7 +70,7 @@ class PicassawebService:
 #        else:
 #            is_private = None
         log.debug("Publishing succeeded.")
-        return image_id
+        return image_id.id.text
 
     
     def unpublish(self, image_id):
@@ -78,7 +78,8 @@ class PicassawebService:
         Unpublish the image from the PicassaWeb cloud.
         """
         log.debug("Unpublishing Picassaweb image: %s" % str(image_id))
-        self.picasaweb_service.Delete(image_id)
+        image = self.picasaweb_service.GetEntry(image_id)
+        self.picasaweb_service.Delete(image)
         log.debug("Unpublishing succeeded.")
         
     def list(self):
@@ -89,7 +90,7 @@ class PicassawebService:
         feed = self.picasaweb_service.GetUserFeed(kind='photo')
         photos = []
         for entry in feed.entry:
-            video_id = entry.id
+            video_id = entry.id.text
             title = entry.title.text
             description = entry.media.description.text
             if len(entry.media.category) > 0:
