@@ -1,13 +1,9 @@
 import logging
 import os.path
 import gdata.photos.service
-import gdata.media
 
-from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
-    Access
+from kcclassmediapublish.metadata.publish_metadata import PublishMetadata
 from kcclassmediapublish.metadata.list_metadata import ListMetadata
-from gdata.photos import PhotoEntry
-from gdata.media import Title, Description
 
 log = logging.getLogger( __name__ )
 

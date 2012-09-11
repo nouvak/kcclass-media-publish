@@ -5,7 +5,6 @@ import gdata.youtube.service
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
     Access
 from kcclassmediapublish.metadata.list_metadata import ListMetadata
-from atom import Id
 
 log = logging.getLogger( __name__ )
 

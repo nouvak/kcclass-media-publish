@@ -1,5 +1,4 @@
 import unittest
-import time
 from kcclassmediapublish.services.picasaweb import PicassawebService
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata, Access
 
