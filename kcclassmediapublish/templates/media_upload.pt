@@ -6,117 +6,125 @@
 		<meta name="keywords" content="python web application" />
 		<meta name="description" content="pyramid web application" />
 		<link rel="shortcut icon" href="${request.static_url('kcclassmediapublish:static/favicon.ico')}" />
-		<!-- <link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/pylons.css')}" type="text/css" media="screen" charset="utf-8" /> -->
-		<link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/media-upload.css')}" type="text/css" media="screen" charset="utf-8" />
-		<!-- <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/nobile/stylesheet.css" media="screen" />
-		<link rel="stylesheet" href="http://static.pylonsproject.org/fonts/neuton/stylesheet.css" media="screen" /> -->
-		<!--[if lte IE 6]>
-		<link rel="stylesheet" href="${request.static_url('kcclassmediapublish:static/ie6.css')}" type="text/css" media="screen" charset="utf-8" />
-		<![endif]-->
+		<link href="${request.static_url('kcclassmediapublish:static/css/bootstrap.css')}" rel="stylesheet" />
 	</head>
 	<body>
-		<h1>KC Class Media upload</h1>
-		<form action="/upload-media-confirm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-			<fieldset>
-				<legend>File</legend>
-				<div class="form-row">
-					<div class="form-input">
-						<input id="filepath" name="filepath" type="file" value="" />
-					</div>
-					<div style="clear: both;"></div>
+		<div style="background-color: grey;">
+			<img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<!--Sidebar content-->
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#">List published media contents</a></li>
+						<li><a href="#">Publish new media content</a></li>
+					</ul>
 				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Media site</legend>
-				<select name="media-site">
-				  <option value="youtube">Youtube</option>
-				  <option value="picasaweb">PicasaWeb</option>
-				  <option value="slideshare">Slideshare</option>
-				  <option value="flickr">Flickr</option>
-				</select>
-			</fieldset>
-
-			<fieldset>
-				<legend>Authentication data</legend>
-				<div class="form-row">
-					<div class="form-label">
-						<label for="username">Username</label>
-					</div>
-					<div class="form-input">
-						<input id="username" name="username" type="text" value="" />
-					</div>
-					<div style="clear: both;"></div>
-				</div>
-	
-				<div class="form-row">
-					<div class="form-label">
-						<label for="password">Password</label>
-					</div>
-					<div class="form-input">
-						<input id="password" name="password" type="password" value="" />
-					</div>
-					<div style="clear: both;"></div>
-				</div>
-			</fieldset>
+				<div class="span9">
+					<!--Body content-->
+					<h1>Upload media content</h1>
+					<form class="form-horizontal" action="/upload-media-confirm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+						<fieldset>
+							<legend>File</legend>				
+							<div class="control-group">
+								<div class="controls">
+									<input id="filepath" name="filepath" type="file" value="" />
+								</div>
+							</div>
+						</fieldset>
 			
-			<fieldset>
-				<legend>Media metadata</legend>
-				<div class="form-row">
-					<div class="form-label">
-						<label for="title">Title</label>
-					</div>
-					<div class="form-input">
-						<input id="title" name="title" type="text" value="" />
-					</div>
-					<div style="clear: both;"></div>
-				</div>			
-	
-				<div class="form-row">
-					<div class="form-label">
-						<label for="description">Description</label>
-					</div>
-					<div class="form-input">
-						<textarea id="description" name="description" rows="5" cols="20"></textarea>
-					</div>
-					<div style="clear: both;"></div>
-				</div>			
-	
-				<div class="form-row">
-					<div class="form-label">
-						<label for="tags">Tags</label>
-					</div>
-					<div class="form-input">
-						<input id="tags" name="tags" type="text" value="" />
-					</div>
-					<div style="clear: both;"></div>
-				</div>	
-	
-				<div class="form-row">
-					<div class="form-label">
-						<label for="category">Category</label>
-					</div>
-					<div class="form-input">
-						<input id="category" name="category" type="text" value="" />
-					</div>
-					<div style="clear: both;"></div>
-				</div>
-	
-				<div class="form-row">
-					<div class="form-label">
-						<label for="access">Access</label>
-					</div>
-					<div class="form-input">
-						<label for="public">Public</label>
-						<input type="radio" name="access" id="public" checked="checked" />
-						<label for="female">Private</label>
-						<input type="radio" name="access" id="private" />
-					</div>
-					<div style="clear: both;"></div>
-				</div>
-			</fieldset>
+						<fieldset>
+							<legend>Media site</legend>
+							
+							<div class="control-group">
+								<div class="controls">
+									<select id="media-site" name="media-site">
+										<option value="youtube">Youtube</option>
+										<option value="picasaweb">PicasaWeb</option>
+										<option value="slideshare">Slideshare</option>
+										<option value="flickr">Flickr</option>
+									</select>
+								</div>
+							</div>
+			
+						</fieldset>
+									
+						<fieldset>
+							<legend>Authentication data</legend>
+			  				
+							<div class="control-group">
+				  				<label for="username" class="control-label">Username</label>
+								<div class="controls">  
+									<input id="username" name="username" type="text" value="" />  
+								</div>  
+							</div>
+			
+							<div class="control-group">
+				  				<label for="password" class="control-label">Password</label>
+								<div class="controls">  
+									<input id="password" name="password" type="text" value="" />  
+								</div>  
+							</div>
+						</fieldset>
 						
-			<input type="submit" value="Upload" />
-		</form>
+						<fieldset>
+							<legend>Media metadata</legend>
+							
+							<div class="control-group">
+				  				<label for="title" class="control-label">Title</label>
+								<div class="controls">  
+									<input id="title" name="title" type="text" value="" />  
+								</div>  
+							</div>
+			
+							<div class="control-group">
+				  				<label for="description" class="control-label">Description</label>
+								<div class="controls">  
+									<textarea id="description" name="description" rows="5" cols="20"></textarea>  
+								</div>  
+							</div>
+			
+							<div class="control-group">
+				  				<label for="tags" class="control-label">Tags</label>
+								<div class="controls">  
+									<input id="tags" name="tags" type="text" value="" />  
+								</div>  
+							</div>
+							
+							<div class="control-group">
+				  				<label for="category" class="control-label">Category</label>
+								<div class="controls">  
+									<input id="category" name="category" type="text" value="" />  
+								</div>  
+							</div>
+							
+							<div class="control-group">
+				  				<label for="access" class="control-label">Access</label>
+								<div class="controls">  
+									<label class="radio">
+										<input type="radio" name="access" id="public" checked="checked" />
+										Public
+									</label>
+									<label class="radio">
+										<input type="radio" name="access" id="private" />
+										Private
+									</label>
+								</div>  
+							</div>
+							
+						</fieldset>
+									
+						<div class="form-actions">
+							<button type="submit" class="btn btn-primary">Upload</button>
+						</div>			
+					</form>
+					
+				</div>
+			</div>
+		</div>
+				
+		<script src="${request.static_url('kcclassmediapublish:static/js/jquery.js')}"></script>
+		<script src="${request.static_url('kcclassmediapublish:static/js/bootstrap.js')}"></script>
 	</body>
 </html>
