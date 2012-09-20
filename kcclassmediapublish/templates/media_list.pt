@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal">
+	<head>
+		<title>KC Class Media list</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<meta name="keywords" content="python web application" />
+		<meta name="description" content="pyramid web application" />
+		<link rel="shortcut icon" href="${request.static_url('kcclassmediapublish:static/favicon.ico')}" />
+		<link href="${request.static_url('kcclassmediapublish:static/css/bootstrap.css')}" rel="stylesheet" />
+	</head>
+	<body>
+		<div style="background-color: grey;">
+			<img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<!--Sidebar content-->
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#">List published media contents</a></li>
+						<li><a href="#">Publish new media content</a></li>
+					</ul>
+				</div>
+				<div class="span9">
+					<!--Body content-->
+					<h1>Upload media content</h1>
+					<ul class="nav nav-pills">
+						<li class="active">
+							<a href="#">Youtube</a>
+						</li>
+						<li>
+							<a href="#">PicasaWeb</a>
+						</li>
+						<li>
+							<a href="#">Slideshare</a>
+						</li>
+						<li>
+							<a href="#">Flickr</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+				
+		<script src="${request.static_url('kcclassmediapublish:static/js/jquery.js')}"></script>
+		<script src="${request.static_url('kcclassmediapublish:static/js/bootstrap.js')}"></script>
+	</body>
+</html>

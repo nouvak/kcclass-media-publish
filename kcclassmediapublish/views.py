@@ -6,9 +6,13 @@ from kcclassmediapublish.upload.upload_file import get_file_from_user
 
 log = logging.getLogger( __name__ )
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def my_view(request):
-    return {'project':'kcclass-media-publish'}
+#@view_config(route_name='home', renderer='templates/mytemplate.pt')
+#def my_view(request):
+#    return {'project':'kcclass-media-publish'}
+
+@view_config(route_name='list-media', renderer='templates/media_list.pt')
+def list_media(request):
+    return {}
 
 @view_config(route_name='upload-media-show', renderer='templates/media_upload.pt')
 def upload_media_show(request):
