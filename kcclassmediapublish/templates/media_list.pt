@@ -7,6 +7,7 @@
 		<meta name="description" content="pyramid web application" />
 		<link rel="shortcut icon" href="${request.static_url('kcclassmediapublish:static/favicon.ico')}" />
 		<link href="${request.static_url('kcclassmediapublish:static/css/bootstrap.css')}" rel="stylesheet" />
+		<link href="${request.static_url('kcclassmediapublish:static/css/main.css')}" rel="stylesheet" />
 	</head>
 	<body>
 		<div style="background-color: grey;">
@@ -16,26 +17,26 @@
 			<div class="row-fluid">
 				<div class="span3">
 					<!--Sidebar content-->
-					<ul class="nav nav-pills">
-						<li class="active"><a href="#">List published media contents</a></li>
-						<li><a href="#">Publish new media content</a></li>
+					<ul class="sidebar-menu nav nav-pills">
+						<li class="active"><a href="/">List published media contents</a></li>
+						<li><a href="/media-upload">Publish new media content</a></li>
 					</ul>
 				</div>
 				<div class="span9">
 					<!--Body content-->
-					<h1>Upload media content</h1>
+					<h1>List media content</h1>
 					<ul class="nav nav-pills">
 						<li class="active">
-							<a href="#">Youtube</a>
+							<a href="/media-list/youtube">Youtube</a>
 						</li>
 						<li>
-							<a href="#">PicasaWeb</a>
+							<a href="/media-list/picassaweb">PicasaWeb</a>
 						</li>
 						<li>
-							<a href="#">Slideshare</a>
+							<a href="/media-list/slideshare">Slideshare</a>
 						</li>
 						<li>
-							<a href="#">Flickr</a>
+							<a href="/media-list/flickr">Flickr</a>
 						</li>
 					</ul>
 
