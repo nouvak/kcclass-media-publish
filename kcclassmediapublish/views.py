@@ -1,24 +1,22 @@
 import logging
-
-from pyramid.view import view_config, render_view_to_response
+import kcclassmediapublish.service_creator as service_creator
 from pyramid.response import Response
 from kcclassmediapublish.upload.upload_file import get_file_from_user
+from pyramid.view import view_config
+
 
 log = logging.getLogger( __name__ )
 
 #@view_config(route_name='home', renderer='templates/mytemplate.pt')
 #def my_view(request):
 #    return {'project':'kcclass-media-publish'}
-
-#@view_config(route_name='home')
-#def home(request):
-#    return render_view_to_response(None, request, name='list_media')
     
 @view_config(route_name='home', renderer='templates/media_list.pt')
 @view_config(route_name='list-media', renderer='templates/media_list.pt')
 def list_media(request):
     provider = request.matchdict.get('provider', 'youtube')
     log.debug("Listing media: provider=%s" % provider)
+    service = service_creator.create(provider, username, password)
     return {}
 
 @view_config(route_name='upload-media-show', renderer='templates/media_upload.pt')
