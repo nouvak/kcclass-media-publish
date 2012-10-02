@@ -1,8 +1,10 @@
 import logging
 
-from pyramid.view import view_config, render_view_to_response
+from pyramid.view import view_config
 from pyramid.response import Response
 from kcclassmediapublish.upload.upload_file import get_file_from_user
+from pyramid.decorator import reify
+from pyramid.renderers import get_renderer
 
 log = logging.getLogger( __name__ )
 
@@ -10,11 +12,20 @@ log = logging.getLogger( __name__ )
 #def my_view(request):
 #    return {'project':'kcclass-media-publish'}
 
-#@view_config(route_name='home')
-#def home(request):
-#    return render_view_to_response(None, request, name='list_media')
+def global_template():
+    return get_renderer("templates/global_layout.pt").implementation()
+
+@view_config(route_name='home', renderer='templates/home.pt')
+def home(request):
+    main = global_template()
+    return {'main': main}
+
+@view_config(route_name='login', renderer='templates/login.pt')
+def login(request):
+    provider = request.matchdict['provider']
+    return {'provider': provider}
     
-@view_config(route_name='home', renderer='templates/media_list.pt')
+#@view_config(route_name='home', renderer='templates/media_list.pt')
 @view_config(route_name='list-media', renderer='templates/media_list.pt')
 def list_media(request):
     provider = request.matchdict.get('provider', 'youtube')

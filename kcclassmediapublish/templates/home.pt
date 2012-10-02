@@ -1,0 +1,5 @@
+<div metal:use-macro="main.macros['layout']">
+    <div metal:fill-slot="content">
+        <p>Welcome to the KC Class media publishing service!</p>
+    </div>
+</div>

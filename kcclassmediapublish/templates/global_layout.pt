@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:metal="http://xml.zope.org/namespaces/metal"
+xmlns:tal="http://xml.zope.org/namespaces/tal"
+metal:define-macro="layout">
+    <head>
+        <title>KC Class Media Publishing Service</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+        <meta name="keywords" content="python web application" />
+        <meta name="description" content="pyramid web application" />
+        <link rel="shortcut icon" href="${request.static_url('kcclassmediapublish:static/favicon.ico')}" />
+        <link href="${request.static_url('kcclassmediapublish:static/css/bootstrap.css')}" rel="stylesheet" />
+        <link href="${request.static_url('kcclassmediapublish:static/css/main.css')}" rel="stylesheet" />
+    </head>
+    <body>
+        <div style="background-color: grey;">
+            <img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
+        </div>
+        <div>
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li>
+                            <a href="/login/youtube">YouTube</a>
+                        </li>
+                        <li>
+                            <a href="/login/picassaweb">Picasa web</a>
+                        </li>
+                        <li>
+                            <a href="/login/slideshare">Flickr</a>
+                        </li>
+                        <li>
+                            <a href="/login/flickr">Slideshare</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="main">
+            <div metal:define-slot="content"></div>
+        </div>
+        
+        <script src="${request.static_url('kcclassmediapublish:static/js/jquery.js')}"></script>
+        <script src="${request.static_url('kcclassmediapublish:static/js/bootstrap.js')}"></script>
+    </body>
+</html>
