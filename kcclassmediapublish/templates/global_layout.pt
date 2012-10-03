@@ -20,17 +20,17 @@ metal:define-macro="layout">
             <div class="navbar">
                 <div class="navbar-inner">
                     <ul class="nav">
-                        <li>
-                            <a href="/login/youtube">YouTube</a>
-                        </li>
-                        <li>
-                            <a href="/login/picassaweb">Picasa web</a>
-                        </li>
-                        <li>
-                            <a href="/login/slideshare">Flickr</a>
-                        </li>
-                        <li>
-                            <a href="/login/flickr">Slideshare</a>
+                        <li tal:repeat="menu services_menu">
+                            <tal:block tal:condition="menu.current">
+                                <li class="active">
+                                    <a href="/login/${menu.href}">${menu.title}</a>
+                                </li>
+                            </tal:block>
+                            <tal:block tal:condition="not menu.current">
+                                <li>
+                                    <a href="/login/${menu.href}">${menu.title}</a>
+                                </li>
+                            </tal:block>
                         </li>
                     </ul>
                 </div>

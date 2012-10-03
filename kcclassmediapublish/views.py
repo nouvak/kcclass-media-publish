@@ -12,18 +12,36 @@ log = logging.getLogger( __name__ )
 #def my_view(request):
 #    return {'project':'kcclass-media-publish'}
 
-def global_template():
+SERVICES_MENU = [
+        {'href': 'youtube', 'title': 'YouTube'},
+        {'href': 'picassaweb', 'title': 'Picasa web'},
+        {'href': 'slideshare', 'title': 'SlideShare'},
+        {'href': 'flickr', 'title': 'Flickr'},
+]
+
+def get_global_template():
     return get_renderer("templates/global_layout.pt").implementation()
+
+def get_services_menu(request):
+    new_menu = SERVICES_MENU[:]
+    url = request.url
+    for menu in new_menu:
+        menu['current'] = url.endswith(menu['href'])
+    return new_menu
+
+def add_global_template_data(dct, request):
+    dct['main'] = get_global_template()
+    dct['services_menu'] = get_services_menu(request)
+    return dct
 
 @view_config(route_name='home', renderer='templates/home.pt')
 def home(request):
-    main = global_template()
-    return {'main': main}
+    return add_global_template_data({}, request)
 
 @view_config(route_name='login', renderer='templates/login.pt')
 def login(request):
     provider = request.matchdict['provider']
-    return {'provider': provider}
+    return add_global_template_data({'provider': provider}, request)
     
 #@view_config(route_name='home', renderer='templates/media_list.pt')
 @view_config(route_name='list-media', renderer='templates/media_list.pt')
