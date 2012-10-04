@@ -17,7 +17,7 @@
 			<div class="row-fluid">
 				<div class="span3">
 					<!--Sidebar content-->
-					<ul class="sidebar-menu nav nav-pills">
+					<ul class="sidebar-menu nav nav-pills nav-stacked">
 						<li class="active"><a href="/">List published media contents</a></li>
 						<li><a href="/media-upload">Publish new media content</a></li>
 					</ul>

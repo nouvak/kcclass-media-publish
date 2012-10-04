@@ -1,5 +1,4 @@
 import logging
-
 from pyramid.view import view_config
 from pyramid.response import Response
 from kcclassmediapublish.upload.upload_file import get_file_from_user
@@ -63,6 +62,7 @@ def login_response(request):
 def list_media(request):
     provider = request.matchdict.get('provider', 'youtube')
     log.debug("Listing media: provider=%s" % provider)
+    service = service_creator.create(provider, username, password)
     return {}
 
 @view_config(route_name='upload-media-show', renderer='templates/media_upload.pt')
