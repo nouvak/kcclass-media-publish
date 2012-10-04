@@ -7,6 +7,7 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
     config.add_route('login', '/login/{provider}')
+    config.add_route('login_response', '/login_response/{provider}')
     config.add_route('list-media', '/media-list/{provider}')
     config.add_route('upload-media-show', '/media-upload')
     config.add_route('upload-media-confirm', '/upload-media-confirm')

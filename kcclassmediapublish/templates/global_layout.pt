@@ -14,13 +14,15 @@ metal:define-macro="layout">
     </head>
     <body>
         <div style="background-color: grey;">
-            <img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
+            <a href="/">
+                <img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
+            </a>
         </div>
         <div>
             <div class="navbar">
                 <div class="navbar-inner">
                     <ul class="nav">
-                        <li tal:repeat="menu services_menu">
+                        <li tal:repeat="menu services_menu.values()">
                             <tal:block tal:condition="menu.current">
                                 <li class="active">
                                     <a href="/login/${menu.href}">${menu.title}</a>

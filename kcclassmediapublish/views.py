@@ -12,21 +12,21 @@ log = logging.getLogger( __name__ )
 #def my_view(request):
 #    return {'project':'kcclass-media-publish'}
 
-SERVICES_MENU = [
-        {'href': 'youtube', 'title': 'YouTube'},
-        {'href': 'picassaweb', 'title': 'Picasa web'},
-        {'href': 'slideshare', 'title': 'SlideShare'},
-        {'href': 'flickr', 'title': 'Flickr'},
-]
+SERVICES_MENU = {
+        'youtube': {'href': 'youtube', 'title': 'YouTube'},
+        'picassaweb': {'href': 'picassaweb', 'title': 'Picasa web'},
+        'slideshare': {'href': 'slideshare', 'title': 'SlideShare'},
+        'flickr': {'href': 'flickr', 'title': 'Flickr'},
+}
 
 def get_global_template():
     return get_renderer("templates/global_layout.pt").implementation()
 
 def get_services_menu(request):
-    new_menu = SERVICES_MENU[:]
+    new_menu = SERVICES_MENU.copy()
     url = request.url
-    for menu in new_menu:
-        menu['current'] = url.endswith(menu['href'])
+    for menu_key in new_menu:
+        new_menu[menu_key]['current'] = url.endswith(new_menu[menu_key]['href'])
     return new_menu
 
 def add_global_template_data(dct, request):
@@ -42,6 +42,21 @@ def home(request):
 def login(request):
     provider = request.matchdict['provider']
     return add_global_template_data({'provider': provider}, request)
+
+@view_config(route_name='login_response', renderer='templates/home.pt')
+def login_response(request):
+    controls = request.POST.items()
+    return add_global_template_data({}, request)
+#    try:
+#        appstruct = myform.validate(controls)
+#    except ValidationFailure, e:
+#        return {'form':e.render(), 'values': False}
+#    # Process the valid form data, do some work
+#    values = {
+#        "name": appstruct['name'],
+#        "shoe_size": appstruct['shoe_size'],
+#        }
+#    return {"form": myform.render(), "values": values}
     
 #@view_config(route_name='home', renderer='templates/media_list.pt')
 @view_config(route_name='list-media', renderer='templates/media_list.pt')
