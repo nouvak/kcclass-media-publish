@@ -1,17 +1,22 @@
 <div metal:use-macro="main.macros['layout']">
     <div metal:fill-slot="content">
-        <form class="form-horizontal" action="/login_response/${provider}" method="post">
+        <form class="form-horizontal" action="/login_response" method="POST">
             <legend>${services_menu[provider].title}</legend>
+            <input type="hidden" name="provider" id="provider" value="${provider}" />
+
+            <div class="alert alert-error"  tal:condition="exists:error_msg">
+                ${error_msg}
+            </div>
             <div class="control-group">
                 <label class="control-label" for="inputUsername">Username</label>
                 <div class="controls">
-                    <input type="text" id="inputUsername" placeholder="Username">
+                    <input type="text" id="inputUsername" name="inputUsername" placeholder="Username">
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputPassword">Password</label>
                 <div class="controls">
-                    <input type="password" id="inputPassword" placeholder="Password">
+                    <input type="password" id="inputPassword" name="inputPassword" placeholder="Password">
                 </div>
             </div>
             <div class="control-group">

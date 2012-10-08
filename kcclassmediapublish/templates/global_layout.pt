@@ -13,34 +13,36 @@ metal:define-macro="layout">
         <link href="${request.static_url('kcclassmediapublish:static/css/main.css')}" rel="stylesheet" />
     </head>
     <body>
-        <div style="background-color: grey;">
-            <a href="/">
-                <img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
-            </a>
-        </div>
-        <div>
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <ul class="nav">
-                        <li tal:repeat="menu services_menu.values()">
-                            <tal:block tal:condition="menu.current">
-                                <li class="active">
-                                    <a href="/login/${menu.href}">${menu.title}</a>
-                                </li>
-                            </tal:block>
-                            <tal:block tal:condition="not menu.current">
-                                <li>
-                                    <a href="/login/${menu.href}">${menu.title}</a>
-                                </li>
-                            </tal:block>
-                        </li>
-                    </ul>
+        <div class="container">
+            <div style="background-color: grey;">
+                <a href="/">
+                    <img src="${request.static_url('kcclassmediapublish:static/img/kc-class-logo.png')}"></img>
+                </a>
+            </div>
+            <div>
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <ul class="nav">
+                            <li tal:repeat="menu services_menu.values()">
+                                <tal:block tal:condition="menu.current">
+                                    <li class="active">
+                                        <a href="/media-list/${menu.href}">${menu.title}</a>
+                                    </li>
+                                </tal:block>
+                                <tal:block tal:condition="not menu.current">
+                                    <li>
+                                        <a href="/media-list/${menu.href}">${menu.title}</a>
+                                    </li>
+                                </tal:block>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div id="main">
-            <div metal:define-slot="content"></div>
+            
+            <div id="main">
+                <div metal:define-slot="content"></div>
+            </div>
         </div>
         
         <script src="${request.static_url('kcclassmediapublish:static/js/jquery.js')}"></script>
