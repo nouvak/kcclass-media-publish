@@ -1,4 +1,5 @@
 import logging
+import time
 from pyramid.view import view_config
 from pyramid.response import Response
 from kcclassmediapublish.upload.upload_file import get_file_from_user
@@ -131,7 +132,7 @@ def upload_file(request):
     log.debug('Uploading succeeded.')
     return Response('OK')
 
-@view_config(route_name='delete_media')
+@view_config(route_name='delete_media', renderer='templates/media_list.pt')
 def delete_media(request):
     provider = request.matchdict.get('provider', 'youtube')
     media_id = request.matchdict.get('id', None)
@@ -140,9 +141,7 @@ def delete_media(request):
         return HTTPFound(route_url('login', request, provider=provider))
     log.debug('Deleting media: provider=%s, id=%s' % (provider, media_id))
     try:
-        service.unpublish(media_id);
+        service.unpublish(media_id) 
     except Exception, e:
         log.error('Unpublishing failed: ' + str(e))
-    media_list = service.list()
-    
-    return add_global_template_data({'provider': provider, 'media_list': media_list}, request)
+    return HTTPFound(route_url('list_media', request, provider=provider))

@@ -1,5 +1,6 @@
 import logging
 import os.path
+import base64
 import gdata.photos.service
 
 from kcclassmediapublish.metadata.publish_metadata import PublishMetadata
@@ -66,15 +67,15 @@ class PicassawebService:
 #        else:
 #            is_private = None
         log.debug("Publishing succeeded.")
-        return image_id.id.text
-
+        return base64.b64encode(image_id.id.text)
     
     def unpublish(self, image_id):
         """
         Unpublish the image from the PicassaWeb cloud.
         """
         log.debug("Unpublishing Picassaweb image: %s" % str(image_id))
-        image = self.picasaweb_service.GetEntry(image_id)
+        image_id_decoded = base64.b64decode(image_id)
+        image = self.picasaweb_service.GetEntry(image_id_decoded)
         self.picasaweb_service.Delete(image)
         log.debug("Unpublishing succeeded.")
         
@@ -86,7 +87,7 @@ class PicassawebService:
         feed = self.picasaweb_service.GetUserFeed(kind='photo')
         photos = []
         for entry in feed.entry:
-            video_id = entry.id.text
+            video_id = base64.b64encode(entry.id.text) 
             title = entry.title.text
             description = entry.media.description.text
             if len(entry.media.category) > 0:

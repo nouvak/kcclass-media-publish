@@ -59,21 +59,23 @@ class SlideshareService:
         """
         log.debug("Listing the uploaded SlideShare photos.")
         feed = self.slideshare_service.get_slideshow_by_user( username_for=self.username )
+        
         slideshows = []
-        for entry in feed['User']['Slideshow']:
-            video_id = str(entry['ID']['value'])
-            title = entry['Title']['value']
-            if 'value' in entry['Description']:
-                description = entry['Description']['value']
-            else:
-                description = None
-            category = None
-            if 'value' in entry['Tags']:
-                tags = entry['Tags']['value']
-            else:
-                tags = []
-            slideshow_metadata = ListMetadata(id=video_id, title=title, 
-                                              description=description,
-                                              tags=tags, category=category)
-            slideshows.append(slideshow_metadata)
+        if feed is not None:
+            for entry in feed['User']['Slideshow']:
+                video_id = str(entry['ID']['value'])
+                title = entry['Title']['value']
+                if 'value' in entry['Description']:
+                    description = entry['Description']['value']
+                else:
+                    description = None
+                category = None
+                if 'value' in entry['Tags']:
+                    tags = entry['Tags']['value']
+                else:
+                    tags = []
+                slideshow_metadata = ListMetadata(id=video_id, title=title, 
+                                                  description=description,
+                                                  tags=tags, category=category)
+                slideshows.append(slideshow_metadata)
         return slideshows
