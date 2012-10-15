@@ -35,7 +35,13 @@ def get_services_menu(request):
 def get_service(request, provider):
     session = request.session
     service_key = get_service_key(provider)
-    return session.get(service_key, None)
+    auth_data = session.get(service_key, None)
+    if auth_data is None:
+        service = None
+    else:
+        service = service_creator.create(provider, auth_data['username'], 
+                                         auth_data['password'])
+    return service
 
 def get_service_key(provider):
     return 'service_' + provider
@@ -64,7 +70,7 @@ def login_response(request):
         if service is not None:
             session = request.session
             service_key = get_service_key(provider)
-            session[service_key] = service
+            session[service_key] = {'username': username, 'password': password}
             return HTTPFound(route_url('list_media', request, provider=provider))
     except BadAuthentication, e:
         error = 'Incorrect username or password.'
