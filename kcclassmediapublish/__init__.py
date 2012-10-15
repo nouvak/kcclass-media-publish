@@ -11,7 +11,7 @@ def main(global_config, **settings):
     config.add_route('login', '/login/{provider}')
     config.add_route('login_response', '/login_response')
     config.add_route('list_media', '/media-list/{provider}')
-    config.add_route('upload_media_show', '/media-upload')
+    config.add_route('upload_media_show', '/media-upload/{provider}')
     config.add_route('upload_media_confirm', '/upload-media-confirm')
     config.add_route('delete_media', '/media-delete/{provider}/{id}')
     config.scan()

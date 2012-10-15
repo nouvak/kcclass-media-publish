@@ -8,6 +8,7 @@ from kcclassmediapublish import service_creator
 from pyramid.httpexceptions import HTTPFound
 from pyramid.url import route_url
 from gdata.service import BadAuthentication
+from kcclassmediapublish.metadata.publish_metadata import Access
 
 log = logging.getLogger( __name__ )
 
@@ -39,7 +40,7 @@ def get_service(request, provider):
     if auth_data is None:
         service = None
     else:
-        service = service_creator.create(provider, auth_data['username'], 
+        service = service_creator.create_service(provider, auth_data['username'], 
                                          auth_data['password'])
     return service
 
@@ -66,7 +67,7 @@ def login_response(request):
     username = request.params['inputUsername']
     password = request.params['inputPassword']
     try:
-        service = service_creator.create(provider, username, password)
+        service = service_creator.create_service(provider, username, password)
         if service is not None:
             session = request.session
             service_key = get_service_key(provider)
@@ -102,8 +103,12 @@ def list_media(request):
 
 @view_config(route_name='upload_media_show', renderer='templates/media_upload.pt')
 def upload_media_show(request):
-    log.debug('Displaying uploading form.')
-    return add_global_template_data({}, request)
+    provider = request.matchdict.get('provider', 'youtube')
+    service = get_service(request, provider)
+    if service is None:
+        return HTTPFound(route_url('login', request, provider=provider))
+    log.debug('Displaying uploading form: provider=%s' % provider)
+    return add_global_template_data({'provider': provider}, request)
 
 @view_config(route_name='upload_media_confirm')
 def upload_file(request):
@@ -112,7 +117,12 @@ def upload_file(request):
     # WARNING: this example does not deal with the fact that IE sends an
     # absolute file *path* as the filename.  This example is naive; it
     # trusts user input.
-    log.debug('Uploading file.')
+    provider = request.POST['media-site']
+    #provider = request.matchdict.get('provider', 'youtube')
+    service = get_service(request, provider)
+    if service is None:
+        return HTTPFound(route_url('login', request, provider=provider))    
+    log.debug('Uploading file: provider=%s' % provider)
     filename = request.POST['filepath'].filename
     log.debug('filename: ' + filename);
     # 'filepath' contains the actual file data which needs to be
@@ -120,23 +130,23 @@ def upload_file(request):
     input_file = request.POST['filepath'].file
     out_filepath = get_file_from_user(filename, input_file)
     log.debug('Output filepath: %s' % out_filepath)
-    # get media metadata.
-    
-    # upload the media file to the selected media sites.
-    media_site = request.POST['media-site']
-    log.debug('Media site: %s' % media_site)
-    if media_site == 'youtube':
-        pass
-    elif media_site == 'picasaweb':
-        pass
-    elif media_site == 'slideshare':
-        pass
-    elif media_site == 'flickr':
-        pass
+    # get media metadata.    
+    pub_metadata = service_creator.create_publish_metadata(provider)
+    pub_metadata.title = request.POST['title']
+    pub_metadata.description = request.POST['description']
+    pub_metadata.tags = [t.strip() for t in request.POST['tags'].split(',')]
+    str_category = request.POST['category'].strip()
+    if str_category != '':
+        pub_metadata.category = str_category
+    str_access = request.POST['access']
+    if str_access == 'private':
+        pub_metadata.access = Access.PRIVATE
     else:
-        log.error('Unidentified media site: ' + media_site)
+        pub_metadata.access = Access.PUBLIC
+    # upload the media file to the selected media sites.
+    service.publish(out_filepath, pub_metadata)
     log.debug('Uploading succeeded.')
-    return Response('OK')
+    return HTTPFound(route_url('list_media', request, provider=provider))
 
 @view_config(route_name='delete_media', renderer='templates/media_list.pt')
 def delete_media(request):
