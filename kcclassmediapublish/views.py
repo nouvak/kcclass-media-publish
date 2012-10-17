@@ -79,16 +79,6 @@ def login_response(request):
         error = 'Login failed.'
         log.error('Service creation failed: ' + str(e))
     return add_global_template_data({'error_msg': error, 'provider': provider}, request)
-#    try:
-#        appstruct = myform.validate(controls)
-#    except ValidationFailure, e:
-#        return {'form':e.render(), 'values': False}
-#    # Process the valid form data, do some work
-#    values = {
-#        'name': appstruct['name'],
-#        'shoe_size': appstruct['shoe_size'],
-#        }
-#    return {'form': myform.render(), 'values': values}
     
 #@view_config(route_name='home', renderer='templates/media_list.pt')
 @view_config(route_name='list_media', renderer='templates/media_list.pt')
@@ -130,19 +120,8 @@ def upload_file(request):
     input_file = request.POST['filepath'].file
     out_filepath = get_file_from_user(filename, input_file)
     log.debug('Output filepath: %s' % out_filepath)
-    # get media metadata.    
-    pub_metadata = service_creator.create_publish_metadata(provider)
-    pub_metadata.title = request.POST['title']
-    pub_metadata.description = request.POST['description']
-    pub_metadata.tags = [t.strip() for t in request.POST['tags'].split(',')]
-    str_category = request.POST['category'].strip()
-    if str_category != '':
-        pub_metadata.category = str_category
-    str_access = request.POST['access']
-    if str_access == 'private':
-        pub_metadata.access = Access.PRIVATE
-    else:
-        pub_metadata.access = Access.PUBLIC
+    # get media metadata.
+    pub_metadata = service.create_pub_metadata(request)    
     # upload the media file to the selected media sites.
     service.publish(out_filepath, pub_metadata)
     log.debug('Uploading succeeded.')

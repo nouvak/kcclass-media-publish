@@ -114,3 +114,16 @@ class FlickrService:
             photos.append(photo_metadata)
 
         return photos
+    
+    def create_pub_metadata(self, request):
+        pub_metadata = PublishMetadata()
+        pub_metadata.title = request.POST['title']
+        pub_metadata.description = request.POST['description']
+        pub_metadata.tags = [t.strip() for t in request.POST['tags'].split(',')]
+        pub_metadata.category = "KCClass"
+        str_access = request.POST['access']
+        if str_access == 'private':
+            pub_metadata.access = Access.PRIVATE
+        else:
+            pub_metadata.access = Access.PUBLIC
+        return pub_metadata

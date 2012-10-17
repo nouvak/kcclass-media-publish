@@ -93,5 +93,19 @@ class YoutubeService:
             videos.append(video_metadata)
         return videos
     
+    def create_pub_metadata(self, request):
+        pub_metadata = PublishMetadata()
+        pub_metadata.title = request.POST['title']
+        pub_metadata.description = request.POST['description']
+        pub_metadata.tags = [t.strip() for t in request.POST['tags'].split(',')]
+        pub_metadata.category = "Education"
+        str_access = request.POST['access']
+        if str_access == 'private':
+            pub_metadata.access = Access.PRIVATE
+        else:
+            pub_metadata.access = Access.PUBLIC
+        return pub_metadata
+
+    
     def __get_id_from_url(self, url):
         return url[url.rfind("/")+1:]

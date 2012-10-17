@@ -18,7 +18,8 @@ class FlickrServiceTest(unittest.TestCase):
                                            tags=["Marko", "kcclass"],
                                            category="KCClass",
                                            access=Access.PUBLIC)
-        image_id = self.flickr.publish("../../sample-data/test-image1.jpg", publish_metadata)
+        #image_id = self.flickr.publish("../../sample-data/test-image1.jpg", publish_metadata)
+        image_id = self.flickr.publish("/tmp/test-image1.jpg", publish_metadata)
         self.assertTrue(image_id is not None, "Image publishing failed!")
         # list the uploaded videos.
         #photos = self.flickr.list("KCClass")

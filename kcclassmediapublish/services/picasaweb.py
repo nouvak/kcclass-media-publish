@@ -3,7 +3,8 @@ import os.path
 import base64
 import gdata.photos.service
 
-from kcclassmediapublish.metadata.publish_metadata import PublishMetadata
+from kcclassmediapublish.metadata.publish_metadata import PublishMetadata,\
+    Access
 from kcclassmediapublish.metadata.list_metadata import ListMetadata
 
 log = logging.getLogger( __name__ )
@@ -104,3 +105,16 @@ class PicassawebService:
             photos.append(photo_metadata)
         return photos
 
+    def create_pub_metadata(self, request):
+        pub_metadata = PublishMetadata()
+        pub_metadata.title = request.POST['title']
+        pub_metadata.description = request.POST['description']
+        pub_metadata.tags = [t.strip() for t in request.POST['tags'].split(',')]
+        #pub_metadata.category = request.POST['category'].strip()
+        pub_metadata.category = "KCClass"
+        str_access = request.POST['access']
+        if str_access == 'private':
+            pub_metadata.access = Access.PRIVATE
+        else:
+            pub_metadata.access = Access.PUBLIC
+        return pub_metadata
