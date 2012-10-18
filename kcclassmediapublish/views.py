@@ -1,20 +1,13 @@
 import logging
-import time
 from pyramid.view import view_config
-from pyramid.response import Response
 from kcclassmediapublish.upload.upload_file import get_file_from_user
 from pyramid.renderers import get_renderer
 from kcclassmediapublish import service_creator
 from pyramid.httpexceptions import HTTPFound
 from pyramid.url import route_url
 from gdata.service import BadAuthentication
-from kcclassmediapublish.metadata.publish_metadata import Access
 
 log = logging.getLogger( __name__ )
-
-#@view_config(route_name='home', renderer='templates/mytemplate.pt')
-#def my_view(request):
-#    return {'project':'kcclass-media-publish'}
 
 SERVICES_MENU = {
         'youtube': {'href': 'youtube', 'title': 'YouTube'},

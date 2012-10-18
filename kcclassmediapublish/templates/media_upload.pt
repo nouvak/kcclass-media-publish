@@ -48,13 +48,13 @@
                                 </div>  
                             </div>
                             
-                            <div class="control-group">
+<!--                             <div class="control-group">
                                 <label for="category" class="control-label">Category</label>
                                 <div class="controls">  
                                     <input id="category" name="category" type="text" value="" />  
                                 </div>  
-                            </div>
-                            
+                            </div> -->
+                                                        
                             <div class="control-group">
                                 <label for="access" class="control-label">Access</label>
                                 <div class="controls">  
