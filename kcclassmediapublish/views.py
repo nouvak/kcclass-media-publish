@@ -106,7 +106,9 @@ def upload_file(request):
     if service is None:
         return HTTPFound(route_url('login', request, provider=provider))    
     log.debug('Uploading file: provider=%s' % provider)
-    filename = request.POST['filepath'].filename
+    # we have to ASCII-encode the string. if we use the utf-8 encoding the 
+    # flickrapi library crashes at file upload.
+    filename = request.POST['filepath'].filename.encode('ascii')
     log.debug('filename: ' + filename);
     # 'filepath' contains the actual file data which needs to be
     # stored somewhere.
