@@ -62,7 +62,11 @@ class SlideshareService:
         
         slideshows = []
         if feed is not None:
-            for entry in feed['User']['Slideshow']:
+            if isinstance(feed['User']['Slideshow'], list):
+                list_slideshow = feed['User']['Slideshow']
+            else:
+                list_slideshow = [feed['User']['Slideshow']]
+            for entry in list_slideshow:
                 video_id = str(entry['ID']['value'])
                 title = entry['Title']['value']
                 if 'value' in entry['Description']:
