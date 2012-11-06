@@ -57,8 +57,8 @@ def login(request):
 @view_config(route_name='login_response', renderer='templates/login.pt', request_method='POST')
 def login_response(request):
     provider = request.params['provider']
-    username = request.params['inputUsername']
-    password = request.params['inputPassword']
+    username = request.params['inputUsername'].encode("ascii")
+    password = request.params['inputPassword'].encode("ascii")
     try:
         service = service_creator.create_service(provider, username, password)
         if service is not None:
